@@ -24,58 +24,42 @@ jobs:
         run: |
           mkdir -p app/src/debug
           mkdir -p app/src/release
-          cat > app/google-services.json << 'EOF'
-          {
-            "project_info": {
-              "project_number": "123456789",
-              "project_id": "dummy-project",
-              "storage_bucket": "dummy-project.appspot.com"
+          python3 -c "
+          import json
+          data = {
+            'project_info': {
+              'project_number': '123456789',
+              'project_id': 'dummy-project',
+              'storage_bucket': 'dummy-project.appspot.com'
             },
-            "client": [
+            'client': [
               {
-                "client_info": {
-                  "mobilesdk_app_id": "1:123456789:android:dummy",
-                  "android_client_info": {
-                    "package_name": "com.yenaly.han1meviewer"
+                'client_info': {
+                  'mobilesdk_app_id': '1:123456789:android:dummy',
+                  'android_client_info': {
+                    'package_name': 'com.yenaly.han1meviewer'
                   }
                 },
-                "oauth_client": [],
-                "api_key": [
+                'oauth_client': [],
+                'api_key': [
                   {
-                    "current_key": "dummy-api-key"
+                    'current_key': 'dummy-api-key'
                   }
                 ],
-                "services": {
-                  "appinvite_service": {
-                    "other_platform_oauth_client": []
-                  }
-                }
-              },
-              {
-                "client_info": {
-                  "mobilesdk_app_id": "1:123456789:android:dummy",
-                  "android_client_info": {
-                    "package_name": "com.yenaly.han1meviewer.debug"
-                  }
-                },
-                "oauth_client": [],
-                "api_key": [
-                  {
-                    "current_key": "dummy-api-key"
-                  }
-                ],
-                "services": {
-                  "appinvite_service": {
-                    "other_platform_oauth_client": []
+                'services': {
+                  'appinvite_service': {
+                    'other_platform_oauth_client': []
                   }
                 }
               }
             ],
-            "configuration_version": "1"
+            'configuration_version': '1'
           }
-          EOF
-          cp app/google-services.json app/src/debug/
-          cp app/google-services.json app/src/release/
+          with open('app/google-services.json', 'w') as f:
+            json.dump(data, f, indent=2)
+          "
+          cp app/google-services.json app/src/debug/google-services.json
+          cp app/google-services.json app/src/release/google-services.json
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
