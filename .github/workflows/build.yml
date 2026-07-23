@@ -22,8 +22,6 @@ jobs:
 
       - name: Create dummy google-services.json
         run: |
-          mkdir -p app/src/debug
-          mkdir -p app/src/release
           python3 -c "
           import json
           data = {
@@ -41,16 +39,19 @@ jobs:
                   }
                 },
                 'oauth_client': [],
-                'api_key': [
-                  {
-                    'current_key': 'dummy-api-key'
+                'api_key': [{'current_key': 'dummy-api-key'}],
+                'services': {'appinvite_service': {'other_platform_oauth_client': []}}
+              },
+              {
+                'client_info': {
+                  'mobilesdk_app_id': '1:123456789:android:dummy2',
+                  'android_client_info': {
+                    'package_name': 'com.yenaly.han1meviewer.debug'
                   }
-                ],
-                'services': {
-                  'appinvite_service': {
-                    'other_platform_oauth_client': []
-                  }
-                }
+                },
+                'oauth_client': [],
+                'api_key': [{'current_key': 'dummy-api-key2'}],
+                'services': {'appinvite_service': {'other_platform_oauth_client': []}}
               }
             ],
             'configuration_version': '1'
