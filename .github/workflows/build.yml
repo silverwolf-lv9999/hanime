@@ -22,6 +22,8 @@ jobs:
 
       - name: Create dummy google-services.json
         run: |
+          mkdir -p app/src/debug
+          mkdir -p app/src/release
           python3 -c "
           import json
           data = {
